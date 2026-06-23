@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | ApnaKart</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    .active-cat { color: #1e3c72 !important; font-weight: 700 !important; background: #f0f4ff; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<main class="products-page">
+    <div class="offer-strip">
+        <div class="offer-track">
+            <div class="offer-group">
+                <span>🔥 Big Fashion Sale — Up to 70% OFF</span>
+                <span>🔥 New Arrivals — Flat 50% OFF</span>
+                <span>🔥 Free Delivery Above ₹999</span>
+            </div>
+            <div class="offer-group">
+                <span>🔥 Big Fashion Sale — Up to 70% OFF</span>
+                <span>🔥 New Arrivals — Flat 50% OFF</span>
+                <span>🔥 Free Delivery Above ₹999</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-layout">
+        <div class="sidebar" id="sidebar"></div>
+        <div class="products-container">
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </div>
+</main>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function getQueryParam(name) {
+    var params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+
+function onLayoutMounted() {
+    var catId = getQueryParam('cat_id');
+    catId = catId ? parseInt(catId) : null;
+
+    // Build sidebar
+    var sidebarHTML = '<h3>Categories</h3>';
+    sidebarHTML += '<div class="category-block"><a href="products.html" class="sub-link ' + (!catId ? 'active-cat' : '') + '" style="font-weight:700;color:#1e3c72;">All Products</a></div>';
+
+    getParentCategories().forEach(function(parent) {
+        sidebarHTML += '<div class="category-block">';
+        sidebarHTML += '<a href="products.html?cat_id=' + parent.id + '" class="main-cat" style="text-decoration:none;cursor:pointer;display:block;">' + escapeHtml(parent.name) + '</a>';
+        sidebarHTML += '<div class="sub-cat">';
+        getChildCategories(parent.id).forEach(function(sub) {
+            var active = (catId === sub.id) ? 'active-cat' : '';
+            sidebarHTML += '<a href="products.html?cat_id=' + sub.id + '" class="sub-link ' + active + '">' + escapeHtml(sub.name) + '</a>';
+        });
+        sidebarHTML += '</div></div>';
+    });
+    document.getElementById('sidebar').innerHTML = sidebarHTML;
+
+    // Build products grid
+    var products = getProductsByCategoryFilter(catId);
+    var grid = document.getElementById('productsGrid');
+    if (products.length === 0) {
+        grid.innerHTML = '<p style="text-align:center;width:100%;padding:40px;color:#888;">No products found in this category.</p>';
+    } else {
+        grid.innerHTML = products.map(productCardHTML).join('');
+    }
+
+    // Page title
+    if (catId) {
+        var cat = CATEGORIES.find(function(c){ return c.id === catId; });
+        if (cat) document.title = cat.name + ' | ApnaKart';
+    }
+}
+</script>
+</body>
+</html>

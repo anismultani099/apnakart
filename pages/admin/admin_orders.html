@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Orders | ApnaKart Admin</title>
+<link rel="stylesheet" href="../../assets/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.adm-wrap { padding: 28px 30px; background: #f4f6fb; min-height: calc(100vh - 70px); }
+.adm-head-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.adm-head-row h2 { font-size: 20px; color: #1e3c72; font-weight: 700; margin: 0; }
+.filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-tabs a { padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; color: #555; background: #fff; border: 1px solid #e2e8f0; }
+.filter-tabs a.active { background: #1e3c72; color: #fff; border-color: #1e3c72; }
+.demo-banner { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 12px; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; }
+.adm-table-box { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.adm-table { width: 100%; border-collapse: collapse; }
+.adm-table th { background: #f8fafc; padding: 12px 16px; text-align: left; font-size: 11px; color: #888; font-weight: 700; text-transform: uppercase; }
+.adm-table td { padding: 12px 16px; border-top: 1px solid #f1f5f9; font-size: 13px; }
+.adm-table tr:hover td { background: #fafbff; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge-pending { background: #fffbeb; color: #d97706; } .badge-confirmed { background: #eff6ff; color: #2563eb; }
+.badge-shipped { background: #f5f3ff; color: #7c3aed; } .badge-delivered { background: #ecfdf5; color: #059669; }
+.badge-cancelled { background: #fef2f2; color: #dc2626; }
+.view-link { color: #3b82f6; text-decoration: none; font-weight: 600; font-size: 12px; }
+</style>
+</head>
+<body data-admin-active="orders">
+<div id="adminHeader"></div>
+
+<div class="adm-wrap">
+    <div class="demo-banner"><i class="fa-solid fa-circle-info"></i> Showing sample demo orders for UI showcase purposes.</div>
+    <div class="adm-head-row">
+        <h2><i class="fa-solid fa-cart-shopping"></i> Manage Orders</h2>
+        <div class="filter-tabs" id="filterTabs"></div>
+    </div>
+    <div class="adm-table-box">
+        <table class="adm-table">
+            <thead><tr><th>#ID</th><th>Customer</th><th>Items</th><th>Amount</th><th>Status</th><th>Date</th><th></th></tr></thead>
+            <tbody id="ordersTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="../../assets/js/data.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+var allOrders = [
+    { id: 312, customer: 'Rahul Sharma', items: 2, amount: 2499, status: 'Pending', date: '23 Jun, 10:15 AM' },
+    { id: 311, customer: 'Sameer Khan', items: 1, amount: 1899, status: 'Confirmed', date: '23 Jun, 09:40 AM' },
+    { id: 310, customer: 'Anis Multani', items: 3, amount: 3299, status: 'Shipped', date: '22 Jun, 06:05 PM' },
+    { id: 309, customer: 'Priya Verma', items: 1, amount: 999, status: 'Delivered', date: '22 Jun, 02:20 PM' },
+    { id: 308, customer: 'Karan Mehta', items: 4, amount: 4599, status: 'Delivered', date: '21 Jun, 11:30 AM' },
+    { id: 307, customer: 'Neha Joshi', items: 1, amount: 1299, status: 'Cancelled', date: '21 Jun, 09:10 AM' },
+    { id: 306, customer: 'Aman Gupta', items: 2, amount: 2199, status: 'Delivered', date: '20 Jun, 04:45 PM' },
+    { id: 305, customer: 'Riya Singh', items: 2, amount: 1599, status: 'Shipped', date: '20 Jun, 01:15 PM' },
+    { id: 304, customer: 'Vikas Patel', items: 1, amount: 899, status: 'Pending', date: '19 Jun, 10:05 AM' },
+    { id: 303, customer: 'Sneha Iyer', items: 3, amount: 3899, status: 'Delivered', date: '18 Jun, 03:30 PM' }
+];
+
+function renderOrdersTable(filterStatus) {
+    var list = filterStatus ? allOrders.filter(function(o){ return o.status === filterStatus; }) : allOrders;
+    document.getElementById('ordersTableBody').innerHTML = list.map(function(o) {
+        return '<tr><td><strong>#' + o.id + '</strong></td><td>' + o.customer + '</td><td>' + o.items + ' item(s)</td><td>₹' + fmtPrice(o.amount) + '</td>' +
+        '<td><span class="badge badge-' + o.status.toLowerCase() + '">' + o.status + '</span></td><td>' + o.date + '</td>' +
+        '<td><a class="view-link" href="admin_order_details.html?id=' + o.id + '">View →</a></td></tr>';
+    }).join('');
+
+    var tabs = ['', 'Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'];
+    document.getElementById('filterTabs').innerHTML = tabs.map(function(t) {
+        var label = t || 'All';
+        var active = (filterStatus || '') === t ? 'active' : '';
+        return '<a href="admin_orders.html' + (t ? '?status=' + t : '') + '" class="' + active + '">' + label + '</a>';
+    }).join('');
+}
+
+function onAdminLayoutMounted() {
+    if (!requireAdminLogin()) return;
+    var status = getQueryParam('status');
+    renderOrdersTable(status);
+}
+</script>
+</body>
+</html>

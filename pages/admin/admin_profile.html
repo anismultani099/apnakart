@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Profile | ApnaKart</title>
+<link rel="stylesheet" href="../../assets/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.adm-wrap { padding: 28px 30px; background: #f4f6fb; min-height: calc(100vh - 70px); display: flex; justify-content: center; }
+.profile-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 30px; text-align: center; max-width: 420px; width: 100%; }
+.profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: #1e3c72; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 16px; }
+.profile-card h3 { font-size: 18px; margin: 0 0 4px; color: #1e293b; }
+.profile-card p { font-size: 13px; color: #888; margin: 0 0 20px; }
+.profile-info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f8fafc; text-align: left; font-size: 13px; color: #555; }
+.profile-info-row strong { color: #1e293b; }
+.profile-actions { display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+.profile-actions a { padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.btn-edit-profile { background: #1e3c72; color: #fff; }
+.btn-change-pass { border: 1.5px solid #1e3c72; color: #1e3c72; }
+</style>
+</head>
+<body data-admin-active="">
+<div id="adminHeader"></div>
+
+<div class="adm-wrap">
+    <div class="profile-card">
+        <div class="profile-avatar">A</div>
+        <h3>Admin</h3>
+        <p>admin@apnakart.com</p>
+        <div class="profile-info-row"><span>Role</span><strong>Administrator</strong></div>
+        <div class="profile-info-row"><span>Email</span><strong>admin@apnakart.com</strong></div>
+        <div class="profile-info-row"><span>Mobile</span><strong>9000000000</strong></div>
+        <div class="profile-actions">
+            <a href="admin_edit_profile.html" class="btn-edit-profile"><i class="fa-solid fa-pen"></i> Edit Profile</a>
+            <a href="admin_change_password.html" class="btn-change-pass"><i class="fa-solid fa-key"></i> Change Password</a>
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/js/data.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+function onAdminLayoutMounted() { if (!requireAdminLogin()) return; }
+</script>
+</body>
+</html>

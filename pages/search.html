@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | ApnaKart</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<main class="products-page">
+    <h2 class="section-title" id="searchTitle">Search Results</h2>
+    <div class="products-grid" id="searchGrid"></div>
+</main>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    var q = getQueryParam('q') || '';
+    document.getElementById('searchTitle').textContent = 'Search Results for "' + q + '"';
+    var grid = document.getElementById('searchGrid');
+
+    if (q.trim() === '') {
+        grid.innerHTML = "<p class='no-products'>Please enter a search term.</p>";
+        return;
+    }
+    var results = searchProducts(q);
+    if (results.length === 0) {
+        grid.innerHTML = "<p class='no-products'>No products found.</p>";
+        return;
+    }
+    grid.innerHTML = results.map(productCardHTML).join('');
+}
+</script>
+</body>
+</html>

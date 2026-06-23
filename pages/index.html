@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApnaKart | Online Clothing Store</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<main>
+
+    <!-- HERO SLIDER -->
+    <section class="hero-slider">
+        <div class="hero-slide active">
+            <img src="../assets/images/hero/hero1.jpg" class="hero-img">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Winter Essentials</h1>
+                <p>Jackets, hoodies &amp; warm styles</p>
+                <a href="products.html" class="hero-btn">Shop Winter</a>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <img src="../assets/images/hero/hero2.jpg" class="hero-img">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Premium Men's Fashion</h1>
+                <p>Upgrade your style with latest trends</p>
+                <a href="products.html" class="hero-btn">Shop Now</a>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <img src="../assets/images/hero/hero3.jpg" class="hero-img">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>New Arrivals</h1>
+                <p>Fresh styles just landed</p>
+                <a href="products.html" class="hero-btn">Explore</a>
+            </div>
+        </div>
+        <button class="slider-arrow prev">&#10094;</button>
+        <button class="slider-arrow next">&#10095;</button>
+        <div class="slider-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </section>
+
+    <!-- OFFER STRIP -->
+    <div class="offer-strip">
+        <div class="offer-track">
+            <div class="offer-group">
+                <span>🔥 Big Fashion Sale — Up to 70% OFF</span>
+                <span>🔥 New Arrivals — Flat 50% OFF</span>
+                <span>🔥 Free Delivery Above ₹999</span>
+            </div>
+            <div class="offer-group">
+                <span>🔥 Big Fashion Sale — Up to 70% OFF</span>
+                <span>🔥 New Arrivals — Flat 50% OFF</span>
+                <span>🔥 Free Delivery Above ₹999</span>
+            </div>
+            <div class="offer-group">
+                <span>🔥 Big Fashion Sale — Up to 70% OFF</span>
+                <span>🔥 New Arrivals — Flat 50% OFF</span>
+                <span>🔥 Free Delivery Above ₹999</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <section class="categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+            <a href="products.html?cat_id=7" class="category-card">
+                <img src="../assets/images/categories/tshirt.jpg"><span>T-Shirts</span>
+            </a>
+            <a href="products.html?cat_id=6" class="category-card">
+                <img src="../assets/images/categories/shirt.jpg"><span>Shirts</span>
+            </a>
+            <a href="products.html?cat_id=8" class="category-card">
+                <img src="../assets/images/categories/jeans.jpg"><span>Jeans</span>
+            </a>
+            <a href="products.html?cat_id=12" class="category-card">
+                <img src="../assets/images/categories/trouser.jpg"><span>Trousers</span>
+            </a>
+            <a href="products.html?cat_id=16" class="category-card">
+                <img src="../assets/images/categories/hoodie.jpg"><span>Hoodies</span>
+            </a>
+            <a href="products.html?cat_id=17" class="category-card">
+                <img src="../assets/images/categories/jacket.jpg"><span>Jackets</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- OFFER BANNER -->
+    <section class="offer-banner">
+        <div class="offer-overlay"></div>
+        <div class="offer-content">
+            <span class="offer-tag">Limited Time Offer</span>
+            <h2>Flat 40% OFF</h2>
+            <p>On Shirts, Hoodies &amp; Jackets</p>
+            <a href="products.html" class="offer-btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- TRENDING PRODUCTS -->
+    <section class="home-products">
+        <h2 class="section-title">Trending Products</h2>
+        <div class="products-grid" id="trendingGrid"></div>
+    </section>
+
+    <!-- WHY CHOOSE -->
+    <section class="why-choose">
+        <h2 class="section-title">Why Choose ApnaKart ??</h2>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon">🚚</div>
+                <h3>Fast Delivery</h3>
+                <p>Quick &amp; reliable delivery across India</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">💳</div>
+                <h3>Secure Payments</h3>
+                <p>100% safe &amp; trusted payment methods</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🔄</div>
+                <h3>Easy Returns</h3>
+                <p>Hassle-free returns &amp; refunds</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">⭐</div>
+                <h3>Quality Products</h3>
+                <p>Premium quality men's fashion</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about-us">
+        <div class="about-container">
+            <div class="about-image">
+                <img src="../assets/images/about/about.jpg" alt="About ApnaKart">
+            </div>
+            <div class="about-content">
+                <span class="about-tag">About ApnaKart</span>
+                <h2>Premium Men's Fashion,<br>Designed for Everyday Style</h2>
+                <p>ApnaKart is a modern men's fashion brand focused on delivering
+                   high-quality, stylish, and affordable clothing.</p>
+                <p>Our mission is simple — great style, honest pricing, and a smooth
+                   shopping experience you can trust.</p>
+                <a href="products.html" class="about-btn">Explore Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="review">"ApnaKart ke products quality me bahut ache hain. Delivery bhi fast thi. Highly recommended!"</p>
+                <div class="testimonial-rating">
+                    <span class="star filled">★</span><span class="star filled">★</span>
+                    <span class="star filled">★</span><span class="star filled">★</span><span class="star">★</span>
+                </div>
+                <div class="customer">
+                    <div class="avatar">A</div>
+                    <div><h4>Anis Multani</h4><span>Verified Buyer</span></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="review">"Shirts aur hoodies ka fabric premium hai. Price ke hisab se value for money."</p>
+                <div class="testimonial-rating">
+                    <span class="star filled">★</span><span class="star filled">★</span>
+                    <span class="star filled">★</span><span class="star filled">★</span><span class="star">★</span>
+                </div>
+                <div class="customer">
+                    <div class="avatar">R</div>
+                    <div><h4>Rahul Sharma</h4><span>Regular Customer</span></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="review">"Website clean hai aur shopping experience smooth laga. Definitely dobara order karunga."</p>
+                <div class="testimonial-rating">
+                    <span class="star filled">★</span><span class="star filled">★</span>
+                    <span class="star filled">★</span><span class="star filled">★</span><span class="star">★</span>
+                </div>
+                <div class="customer">
+                    <div class="avatar">S</div>
+                    <div><h4>Sameer Khan</h4><span>Happy Customer</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    var grid = document.getElementById('trendingGrid');
+    var trending = PRODUCTS.slice().sort(function(a,b){ return b.id - a.id; }).slice(0, 15);
+    grid.innerHTML = trending.map(productCardHTML).join('');
+}
+
+// Hero slider
+document.addEventListener('DOMContentLoaded', function() {
+    var slides = document.querySelectorAll('.hero-slide');
+    var dots = document.querySelectorAll('.dot');
+    var current = 0, timer;
+    function show(n) {
+        slides.forEach(function(s){ s.classList.remove('active'); });
+        dots.forEach(function(d){ d.classList.remove('active'); });
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        if (dots[current]) dots[current].classList.add('active');
+    }
+    function start() { timer = setInterval(function(){ show(current+1); }, 4000); }
+    var prev = document.querySelector('.prev'), next = document.querySelector('.next');
+    if (prev) prev.addEventListener('click', function(){ clearInterval(timer); show(current-1); start(); });
+    if (next) next.addEventListener('click', function(){ clearInterval(timer); show(current+1); start(); });
+    dots.forEach(function(d,i){ d.addEventListener('click', function(){ clearInterval(timer); show(i); start(); }); });
+    if (slides.length) start();
+});
+</script>
+</body>
+</html>

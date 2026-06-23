@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | ApnaKart</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<div class="auth-container">
+    <div class="auth-left">
+        <h2>Welcome Back</h2>
+        <p>Login to ApnaKart and continue shopping</p>
+    </div>
+    <div class="auth-right">
+        <h2>Login</h2>
+        <p style="background:#f0f4ff;color:#1e3c72;padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:14px;">
+            <i class="fa-solid fa-circle-info"></i> Demo mode: enter any name &amp; email to "login" (no real account needed).
+        </p>
+        <p id="loginMsg" style="color:red;margin-bottom:10px;display:none;"></p>
+        <form id="loginForm">
+            <input type="text" id="loginName" placeholder="Your Name" required>
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <input type="password" id="loginPassword" placeholder="Password (any value, demo)" required>
+            <button type="submit" class="btn">Login</button>
+            <p class="auth-link">Don't have an account? <a href="register.html">Register</a></p>
+        </form>
+    </div>
+</div>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = document.getElementById('loginName').value.trim();
+        var email = document.getElementById('loginEmail').value.trim();
+        if (!name || !email) return;
+        demoLogin(name, email);
+        var redirect = getQueryParam('redirect');
+        window.location.href = redirect ? PAGES_URL + '/' + redirect : 'index.html';
+    });
+}
+</script>
+</body>
+</html>

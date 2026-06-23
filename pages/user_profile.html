@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile | ApnaKart</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.profile-wrap { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+.profile-wrap h2 { font-size: 22px; font-weight: 700; color: #1e3c72; margin-bottom: 20px; text-align: center; }
+.profile-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 30px; text-align: center; }
+.profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: #1e3c72; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 16px; }
+.profile-card h3 { font-size: 18px; margin: 0 0 4px; color: #1e293b; }
+.profile-card p { font-size: 13px; color: #888; margin: 0 0 20px; }
+.profile-info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f8fafc; text-align: left; font-size: 13px; color: #555; }
+.profile-info-row strong { color: #1e293b; }
+.profile-actions { display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+.profile-actions a, .profile-actions button { padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px; border: none; cursor: pointer; }
+.btn-edit-profile { background: #1e3c72; color: #fff; }
+.btn-change-pass { border: 1.5px solid #1e3c72; color: #1e3c72; background: #fff; }
+.btn-logout-profile { background: #fef2f2; color: #dc2626; }
+</style>
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<div class="profile-wrap">
+    <h2><i class="fa-solid fa-id-card"></i> My Profile</h2>
+    <div id="profileContent"></div>
+</div>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    var user = Store.user || { name: 'Guest User', email: 'guest@example.com', mobile: '9000000000' };
+    var initial = user.name.charAt(0).toUpperCase();
+
+    document.getElementById('profileContent').innerHTML = '' +
+    '<div class="profile-card">' +
+        '<div class="profile-avatar">' + initial + '</div>' +
+        '<h3>' + escapeHtml(user.name) + '</h3>' +
+        '<p>' + escapeHtml(user.email) + '</p>' +
+        '<div class="profile-info-row"><span>Full Name</span><strong>' + escapeHtml(user.name) + '</strong></div>' +
+        '<div class="profile-info-row"><span>Email</span><strong>' + escapeHtml(user.email) + '</strong></div>' +
+        '<div class="profile-info-row"><span>Mobile</span><strong>' + escapeHtml(user.mobile || 'Not set') + '</strong></div>' +
+        '<div class="profile-actions">' +
+            '<a href="user_edit_profile.html" class="btn-edit-profile"><i class="fa-solid fa-pen"></i> Edit Profile</a>' +
+            '<a href="user_change_password.html" class="btn-change-pass"><i class="fa-solid fa-key"></i> Change Password</a>' +
+            '<button class="btn-logout-profile" onclick="demoLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>' +
+        '</div>' +
+    '</div>';
+}
+</script>
+</body>
+</html>

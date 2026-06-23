@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | ApnaKart</title>
+<link rel="stylesheet" href="../../assets/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.dash-wrap { padding: 28px 30px; background: #f4f6fb; min-height: calc(100vh - 70px); }
+.dash-welcome { margin-bottom: 24px; }
+.dash-welcome h2 { font-size: 22px; color: #1e3c72; font-weight: 700; margin: 0 0 4px; }
+.dash-welcome p  { color: #888; font-size: 14px; margin: 0; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: #fff; border-radius: 12px; padding: 20px 22px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-left: 4px solid transparent; transition: transform 0.2s; }
+.stat-card:hover { transform: translateY(-2px); }
+.stat-card.blue { border-left-color: #3b82f6; } .stat-card.green { border-left-color: #10b981; }
+.stat-card.orange { border-left-color: #f59e0b; } .stat-card.red { border-left-color: #ef4444; }
+.stat-card.purple { border-left-color: #8b5cf6; } .stat-card.teal { border-left-color: #14b8a6; }
+.stat-card.pink { border-left-color: #ec4899; } .stat-card.indigo { border-left-color: #6366f1; }
+.stat-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.stat-card.blue .stat-icon { background: #eff6ff; color: #3b82f6; }
+.stat-card.green .stat-icon { background: #ecfdf5; color: #10b981; }
+.stat-card.orange .stat-icon { background: #fffbeb; color: #f59e0b; }
+.stat-card.red .stat-icon { background: #fef2f2; color: #ef4444; }
+.stat-card.purple .stat-icon { background: #f5f3ff; color: #8b5cf6; }
+.stat-card.teal .stat-icon { background: #f0fdfa; color: #14b8a6; }
+.stat-card.pink .stat-icon { background: #fdf2f8; color: #ec4899; }
+.stat-card.indigo .stat-icon { background: #eef2ff; color: #6366f1; }
+.stat-info h4 { font-size: 13px; color: #888; font-weight: 500; margin: 0 0 4px; }
+.stat-info .stat-num { font-size: 26px; font-weight: 700; color: #1e293b; line-height: 1; }
+.stat-info .stat-sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+.status-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+.status-card { background: #fff; border-radius: 10px; padding: 14px 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-decoration: none; display: block; transition: transform 0.15s, box-shadow 0.15s; }
+.status-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.10); cursor: pointer; }
+.status-card .s-num { font-size: 28px; font-weight: 700; margin: 6px 0 2px; }
+.status-card .s-lbl { font-size: 12px; color: #666; font-weight: 500; }
+.status-card .s-sub { font-size: 11px; color: #aaa; margin-top: 2px; }
+.sc-pending .s-num { color: #f59e0b; } .sc-confirmed .s-num { color: #3b82f6; }
+.sc-shipped .s-num { color: #8b5cf6; } .sc-delivered .s-num { color: #10b981; }
+.sc-cancelled .s-num { color: #ef4444; }
+.dash-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.dash-panel { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.dash-panel .panel-head { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; }
+.dash-panel .panel-head h3 { font-size: 15px; font-weight: 600; color: #1e3c72; margin: 0; }
+.dash-panel .panel-head a { font-size: 12px; color: #3b82f6; text-decoration: none; }
+.dash-orders { grid-column: span 2; }
+.orders-table { width: 100%; border-collapse: collapse; }
+.orders-table th { background: #f8fafc; padding: 10px 14px; text-align: left; font-size: 12px; color: #888; font-weight: 600; text-transform: uppercase; }
+.orders-table td { padding: 12px 14px; border-top: 1px solid #f1f5f9; font-size: 13px; }
+.orders-table tr:hover td { background: #fafbff; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge-pending { background: #fffbeb; color: #d97706; } .badge-confirmed { background: #eff6ff; color: #2563eb; }
+.badge-shipped { background: #f5f3ff; color: #7c3aed; } .badge-delivered { background: #ecfdf5; color: #059669; }
+.badge-cancelled { background: #fef2f2; color: #dc2626; }
+.top-product-row { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-top: 1px solid #f1f5f9; }
+.top-product-row img { width: 42px; height: 42px; object-fit: cover; border-radius: 8px; }
+.top-product-info { flex: 1; min-width: 0; }
+.top-product-info h5 { font-size: 13px; font-weight: 600; color: #1e293b; margin: 0 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-product-info span { font-size: 11px; color: #888; }
+.top-product-sold { font-size: 13px; font-weight: 700; color: #3b82f6; white-space: nowrap; }
+.chart-wrap { padding: 16px 18px; }
+.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 120px; margin-bottom: 6px; }
+.chart-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+.chart-bar { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #3b82f6, #6366f1); min-height: 4px; transition: height 0.5s ease; }
+.chart-lbl { font-size: 10px; color: #aaa; }
+.chart-val { font-size: 10px; color: #555; font-weight: 600; }
+.lowstock-row { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-top: 1px solid #f1f5f9; }
+.lowstock-row img { width: 36px; height: 36px; object-fit: cover; border-radius: 6px; }
+.lowstock-info { flex: 1; min-width: 0; }
+.lowstock-info h5 { font-size: 12px; font-weight: 600; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stock-badge2 { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.stock-0 { background: #fef2f2; color: #dc2626; } .stock-low { background: #fffbeb; color: #d97706; }
+</style>
+</head>
+<body data-admin-active="dashboard">
+<div id="adminHeader"></div>
+
+<div class="dash-wrap">
+    <div class="dash-welcome">
+        <h2>👋 Welcome back, Admin!</h2>
+        <p id="dashDate"></p>
+    </div>
+
+    <div class="stat-grid">
+        <div class="stat-card blue"><div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div><div class="stat-info"><h4>Total Orders</h4><div class="stat-num">312</div><div class="stat-sub">This month: 48</div></div></div>
+        <div class="stat-card green"><div class="stat-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div><div class="stat-info"><h4>Total Revenue</h4><div class="stat-num">₹6,42,500</div><div class="stat-sub">This month: ₹84,200</div></div></div>
+        <div class="stat-card purple"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-info"><h4>Total Users</h4><div class="stat-num">186</div><div class="stat-sub">Registered customers</div></div></div>
+        <div class="stat-card orange"><div class="stat-icon"><i class="fa-solid fa-box-open"></i></div><div class="stat-info"><h4>Total Products</h4><div class="stat-num" id="totalProductsStat">0</div><div class="stat-sub">Categories: <span id="totalCatsStat">0</span></div></div></div>
+        <div class="stat-card teal"><div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div><div class="stat-info"><h4>Today's Orders</h4><div class="stat-num">6</div><div class="stat-sub">Last 7 days: 29</div></div></div>
+        <div class="stat-card red"><div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div><div class="stat-info"><h4>Out of Stock</h4><div class="stat-num" id="outOfStockStat">0</div><div class="stat-sub">Low stock (≤5): <span id="lowStockStat">0</span></div></div></div>
+        <div class="stat-card pink"><div class="stat-icon"><i class="fa-solid fa-truck"></i></div><div class="stat-info"><h4>Shipped Orders</h4><div class="stat-num">54</div><div class="stat-sub">Confirmed: 38</div></div></div>
+        <div class="stat-card indigo"><div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div><div class="stat-info"><h4>Delivered</h4><div class="stat-num">198</div><div class="stat-sub">Cancelled: 12</div></div></div>
+    </div>
+
+    <div class="status-grid">
+        <a href="admin_orders.html?status=Pending" class="status-card sc-pending"><div class="s-lbl">🟡 Pending</div><div class="s-num">10</div><div class="s-sub">Click to view →</div></a>
+        <a href="admin_orders.html?status=Confirmed" class="status-card sc-confirmed"><div class="s-lbl">🔵 Confirmed</div><div class="s-num">38</div><div class="s-sub">Click to view →</div></a>
+        <a href="admin_orders.html?status=Shipped" class="status-card sc-shipped"><div class="s-lbl">🟣 Shipped</div><div class="s-num">54</div><div class="s-sub">Click to view →</div></a>
+        <a href="admin_orders.html?status=Delivered" class="status-card sc-delivered"><div class="s-lbl">🟢 Delivered</div><div class="s-num">198</div><div class="s-sub">Click to view →</div></a>
+        <a href="admin_orders.html?status=Cancelled" class="status-card sc-cancelled"><div class="s-lbl">🔴 Cancelled</div><div class="s-num">12</div><div class="s-sub">Click to view →</div></a>
+    </div>
+
+    <div class="dash-bottom">
+        <div class="dash-panel dash-orders">
+            <div class="panel-head"><h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Orders</h3><a href="admin_orders.html">View All →</a></div>
+            <table class="orders-table">
+                <thead><tr><th>#ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody id="recentOrdersBody"></tbody>
+            </table>
+        </div>
+        <div class="dash-panel">
+            <div class="panel-head"><h3><i class="fa-solid fa-fire"></i> Top Selling</h3><a href="admin_products.html">All Products →</a></div>
+            <div id="topProductsList"></div>
+        </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:24px;">
+        <div class="dash-panel">
+            <div class="panel-head"><h3><i class="fa-solid fa-chart-bar"></i> Orders — Last 7 Days</h3></div>
+            <div class="chart-wrap"><div class="chart-bars" id="chartBars"></div></div>
+        </div>
+        <div class="dash-panel">
+            <div class="panel-head"><h3><i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i> Stock Alerts</h3><a href="admin_products.html">Manage →</a></div>
+            <div id="lowStockList"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/js/data.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+function onAdminLayoutMounted() {
+    if (!requireAdminLogin()) return;
+
+    document.getElementById('dashDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }) + ' — Here\'s what\'s happening in your store today.';
+
+    document.getElementById('totalProductsStat').textContent = PRODUCTS.length;
+    document.getElementById('totalCatsStat').textContent = CATEGORIES.length;
+    var outOfStock = PRODUCTS.filter(function(p){ return p.stock == 0; }).length;
+    var lowStock = PRODUCTS.filter(function(p){ return p.stock > 0 && p.stock <= 5; }).length;
+    document.getElementById('outOfStockStat').textContent = outOfStock;
+    document.getElementById('lowStockStat').textContent = lowStock;
+
+    var sampleOrders = [
+        { id: 312, customer: 'Rahul Sharma', amount: 2499, status: 'Pending', date: '23 Jun, 10:15 AM' },
+        { id: 311, customer: 'Sameer Khan', amount: 1899, status: 'Confirmed', date: '23 Jun, 09:40 AM' },
+        { id: 310, customer: 'Anis Multani', amount: 3299, status: 'Shipped', date: '22 Jun, 06:05 PM' },
+        { id: 309, customer: 'Priya Verma', amount: 999, status: 'Delivered', date: '22 Jun, 02:20 PM' },
+        { id: 308, customer: 'Karan Mehta', amount: 4599, status: 'Delivered', date: '21 Jun, 11:30 AM' },
+        { id: 307, customer: 'Neha Joshi', amount: 1299, status: 'Cancelled', date: '21 Jun, 09:10 AM' },
+        { id: 306, customer: 'Aman Gupta', amount: 2199, status: 'Delivered', date: '20 Jun, 04:45 PM' },
+        { id: 305, customer: 'Riya Singh', amount: 1599, status: 'Shipped', date: '20 Jun, 01:15 PM' }
+    ];
+    document.getElementById('recentOrdersBody').innerHTML = sampleOrders.map(function(o) {
+        return '<tr><td><strong>#' + o.id + '</strong></td><td>' + o.customer + '</td><td>₹' + fmtPrice(o.amount) + '</td>' +
+        '<td><span class="badge badge-' + o.status.toLowerCase() + '">' + o.status + '</span></td><td>' + o.date + '</td></tr>';
+    }).join('');
+
+    var top = PRODUCTS.slice(0, 5);
+    document.getElementById('topProductsList').innerHTML = top.map(function(p, i) {
+        var sold = 80 - i * 11;
+        return '<div class="top-product-row"><img src="' + imgUrl(p.image) + '" alt=""><div class="top-product-info"><h5>' + escapeHtml(p.name) + '</h5><span>Revenue: ₹' + fmtPrice(p.price * sold) + '</span></div><div class="top-product-sold">' + sold + ' sold</div></div>';
+    }).join('');
+
+    var chartData = [12, 18, 9, 22, 15, 27, 19];
+    var labels = ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'];
+    var maxVal = Math.max.apply(null, chartData);
+    document.getElementById('chartBars').innerHTML = chartData.map(function(v, i) {
+        return '<div class="chart-bar-col"><div class="chart-val">' + v + '</div><div class="chart-bar" style="height:' + Math.round((v/maxVal)*100) + '%;"></div><div class="chart-lbl">' + labels[i] + '</div></div>';
+    }).join('');
+
+    var lowStockProducts = PRODUCTS.filter(function(p){ return p.stock <= 5; }).slice(0, 5);
+    if (lowStockProducts.length === 0) {
+        document.getElementById('lowStockList').innerHTML = '<p style="text-align:center; padding:20px; color:#10b981;">✅ All products are well-stocked!</p>';
+    } else {
+        document.getElementById('lowStockList').innerHTML = lowStockProducts.map(function(p) {
+            return '<div class="lowstock-row"><img src="' + imgUrl(p.image) + '" alt=""><div class="lowstock-info"><h5>' + escapeHtml(p.name) + '</h5></div><span class="stock-badge2 ' + (p.stock == 0 ? 'stock-0' : 'stock-low') + '">' + (p.stock == 0 ? 'Out of Stock' : p.stock + ' left') + '</span></div>';
+        }).join('');
+    }
+}
+</script>
+</body>
+</html>

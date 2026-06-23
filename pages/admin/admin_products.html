@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Products | ApnaKart Admin</title>
+<link rel="stylesheet" href="../../assets/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.adm-wrap { padding: 28px 30px; background: #f4f6fb; min-height: calc(100vh - 70px); }
+.adm-head-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.adm-head-row h2 { font-size: 20px; color: #1e3c72; font-weight: 700; margin: 0; }
+.adm-search-box { display: flex; gap: 10px; }
+.adm-search-box input { padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 13px; width: 240px; }
+.btn-add-new { background: #1e3c72; color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.adm-table-box { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.adm-table { width: 100%; border-collapse: collapse; }
+.adm-table th { background: #f8fafc; padding: 12px 16px; text-align: left; font-size: 11px; color: #888; font-weight: 700; text-transform: uppercase; }
+.adm-table td { padding: 12px 16px; border-top: 1px solid #f1f5f9; font-size: 13px; vertical-align: middle; }
+.adm-table tr:hover td { background: #fafbff; }
+.prod-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+.prod-name-cell { display: flex; align-items: center; gap: 12px; }
+.stock-pill { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+.stock-ok { background: #ecfdf5; color: #059669; }
+.stock-low2 { background: #fffbeb; color: #d97706; }
+.stock-out { background: #fef2f2; color: #dc2626; }
+.act-btn { border: none; background: none; cursor: pointer; font-size: 14px; padding: 6px; color: #888; }
+.act-btn.edit:hover { color: #3b82f6; }
+.act-btn.del:hover { color: #dc2626; }
+.pagination-row { display: flex; justify-content: center; gap: 6px; padding: 16px; }
+.pagination-row button { width: 32px; height: 32px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; font-size: 12px; cursor: pointer; }
+.pagination-row button.active { background: #1e3c72; color: #fff; border-color: #1e3c72; }
+.demo-banner { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 12px; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; }
+</style>
+</head>
+<body data-admin-active="products">
+<div id="adminHeader"></div>
+
+<div class="adm-wrap">
+    <div class="demo-banner"><i class="fa-solid fa-circle-info"></i> Demo mode — Add / Edit / Delete actions are for UI showcase only and won't persist data.</div>
+    <div class="adm-head-row">
+        <h2><i class="fa-solid fa-box"></i> Manage Products (<span id="prodCount">0</span>)</h2>
+        <div style="display:flex;gap:10px;">
+            <div class="adm-search-box"><input type="text" id="prodSearch" placeholder="Search products..."></div>
+            <button class="btn-add-new" onclick="showToast('Demo mode: Add Product disabled')"><i class="fa-solid fa-plus"></i> Add Product</button>
+        </div>
+    </div>
+    <div class="adm-table-box">
+        <table class="adm-table">
+            <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
+            <tbody id="prodTableBody"></tbody>
+        </table>
+        <div class="pagination-row" id="pagination"></div>
+    </div>
+</div>
+
+<script src="../../assets/js/data.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+var PAGE_SIZE = 15;
+var currentPage = 1;
+var filteredList = [];
+
+function renderProductsTable() {
+    var q = document.getElementById('prodSearch').value.toLowerCase();
+    filteredList = PRODUCTS.filter(function(p) { return p.name.toLowerCase().indexOf(q) !== -1; });
+    document.getElementById('prodCount').textContent = filteredList.length;
+
+    var totalPages = Math.max(1, Math.ceil(filteredList.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = 1;
+    var pageItems = filteredList.slice((currentPage-1)*PAGE_SIZE, currentPage*PAGE_SIZE);
+
+    document.getElementById('prodTableBody').innerHTML = pageItems.map(function(p) {
+        var stockClass = p.stock == 0 ? 'stock-out' : (p.stock <= 5 ? 'stock-low2' : 'stock-ok');
+        var stockText = p.stock == 0 ? 'Out of Stock' : p.stock + ' in stock';
+        return '<tr>' +
+            '<td><div class="prod-name-cell"><img class="prod-thumb" src="' + imgUrl(p.image) + '" alt=""><span>' + escapeHtml(p.name) + '</span></div></td>' +
+            '<td>' + escapeHtml(getCategoryName(p.category_id)) + '</td>' +
+            '<td>₹' + fmtPrice(p.price) + '</td>' +
+            '<td><span class="stock-pill ' + stockClass + '">' + stockText + '</span></td>' +
+            '<td><button class="act-btn edit" onclick="showToast(\'Demo mode: Edit disabled\')"><i class="fa-solid fa-pen"></i></button><button class="act-btn del" onclick="showToast(\'Demo mode: Delete disabled\')"><i class="fa-solid fa-trash"></i></button></td>' +
+        '</tr>';
+    }).join('');
+
+    var pagHTML = '';
+    for (var i = 1; i <= Math.min(totalPages, 10); i++) {
+        pagHTML += '<button class="' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
+    }
+    document.getElementById('pagination').innerHTML = pagHTML;
+}
+function goToPage(n) { currentPage = n; renderProductsTable(); }
+
+function onAdminLayoutMounted() {
+    if (!requireAdminLogin()) return;
+    document.getElementById('prodSearch').addEventListener('input', function() { currentPage = 1; renderProductsTable(); });
+    renderProductsTable();
+}
+</script>
+</body>
+</html>

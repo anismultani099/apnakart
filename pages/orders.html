@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders | ApnaKart</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.orders-wrap { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+.orders-wrap h2 { font-size: 22px; font-weight: 700; color: #1e3c72; margin-bottom: 6px; text-align: center; }
+.demo-note { text-align: center; font-size: 12px; color: #aaa; margin-bottom: 24px; }
+.order-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 20px 22px; margin-bottom: 16px; }
+.order-card-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9; }
+.order-id { font-size: 14px; font-weight: 700; color: #1e293b; }
+.order-date { font-size: 12px; color: #888; }
+.order-status { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; }
+.status-delivered { background: #ecfdf5; color: #059669; }
+.status-shipped { background: #eff6ff; color: #2563eb; }
+.status-processing { background: #fffbeb; color: #d97706; }
+.order-items-row { display: flex; gap: 12px; overflow-x: auto; margin-bottom: 12px; }
+.order-item-thumb { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; border: 1px solid #f1f5f9; }
+.order-card-bottom { display: flex; justify-content: space-between; align-items: center; }
+.order-total { font-size: 14px; font-weight: 700; color: #1e3c72; }
+.order-view-link { font-size: 13px; color: #1e3c72; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<div class="orders-wrap">
+    <h2><i class="fa-solid fa-box"></i> My Orders</h2>
+    <p class="demo-note">Showing sample demo orders for UI showcase purposes (no real order history exists in this static build).</p>
+    <div id="ordersList"></div>
+</div>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    var sampleOrderDefs = [
+        { id: 'AK10234', date: '12 Jun 2026', status: 'Delivered', statusClass: 'status-delivered', productIds: [1,2,3] },
+        { id: 'AK10198', date: '02 Jun 2026', status: 'Shipped', statusClass: 'status-shipped', productIds: [4,5] },
+        { id: 'AK10142', date: '21 May 2026', status: 'Processing', statusClass: 'status-processing', productIds: [6,7,8] }
+    ];
+
+    var html = sampleOrderDefs.map(function(o) {
+        var products = o.productIds.map(getProductById).filter(Boolean);
+        var total = products.reduce(function(sum, p){ return sum + p.price; }, 0);
+        var thumbs = products.map(function(p) {
+            return '<img class="order-item-thumb" src="' + imgUrl(p.image) + '" alt="">';
+        }).join('');
+        return '' +
+        '<div class="order-card">' +
+            '<div class="order-card-top">' +
+                '<div><div class="order-id">Order #' + o.id + '</div><div class="order-date">Placed on ' + o.date + '</div></div>' +
+                '<span class="order-status ' + o.statusClass + '">' + o.status + '</span>' +
+            '</div>' +
+            '<div class="order-items-row">' + thumbs + '</div>' +
+            '<div class="order-card-bottom">' +
+                '<span class="order-total">Total: ₹' + fmtPrice(total) + '</span>' +
+                '<a class="order-view-link" href="order_details.html?id=' + o.id + '">View Details <i class="fa-solid fa-arrow-right"></i></a>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+
+    document.getElementById('ordersList').innerHTML = html;
+}
+</script>
+</body>
+</html>

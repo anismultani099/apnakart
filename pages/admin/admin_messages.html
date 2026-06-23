@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messages | ApnaKart Admin</title>
+<link rel="stylesheet" href="../../assets/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.adm-wrap { padding: 28px 30px; background: #f4f6fb; min-height: calc(100vh - 70px); }
+.adm-wrap h2 { font-size: 20px; color: #1e3c72; font-weight: 700; margin-bottom: 20px; }
+.demo-banner { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 12px; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; }
+.msg-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 18px 22px; margin-bottom: 14px; }
+.msg-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.msg-top strong { color: #1e293b; font-size: 14px; }
+.msg-top span { font-size: 12px; color: #aaa; }
+.msg-email { font-size: 12px; color: #888; margin-bottom: 10px; }
+.msg-body { font-size: 13px; color: #555; line-height: 1.6; }
+</style>
+</head>
+<body data-admin-active="messages">
+<div id="adminHeader"></div>
+
+<div class="adm-wrap">
+    <div class="demo-banner"><i class="fa-solid fa-circle-info"></i> Showing sample demo contact messages for UI showcase purposes.</div>
+    <h2><i class="fa-solid fa-envelope"></i> Customer Messages</h2>
+    <div id="msgList"></div>
+</div>
+
+<script src="../../assets/js/data.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+function onAdminLayoutMounted() {
+    if (!requireAdminLogin()) return;
+    var messages = [
+        { name: 'Rahul Sharma', email: 'rahul.sharma@example.com', date: '22 Jun 2026', body: 'Hi, I wanted to ask if Cash on Delivery is available for orders above ₹5000? Thanks!' },
+        { name: 'Priya Verma', email: 'priya.verma@example.com', date: '21 Jun 2026', body: 'My order is showing as shipped but I haven\'t received any tracking details yet. Could you please help?' },
+        { name: 'Karan Mehta', email: 'karan.mehta@example.com', date: '19 Jun 2026', body: 'Great quality products! Just wanted to know if you have plans to add more winterwear options soon.' }
+    ];
+    document.getElementById('msgList').innerHTML = messages.map(function(m) {
+        return '<div class="msg-card"><div class="msg-top"><strong>' + m.name + '</strong><span>' + m.date + '</span></div><div class="msg-email">' + m.email + '</div><div class="msg-body">' + m.body + '</div></div>';
+    }).join('');
+}
+</script>
+</body>
+</html>

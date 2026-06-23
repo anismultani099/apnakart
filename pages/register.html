@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | ApnaKart</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<div class="auth-container">
+    <div class="auth-left">
+        <h2>Create Account</h2>
+        <p>Join ApnaKart and explore men's fashion</p>
+    </div>
+    <div class="auth-right">
+        <h2>Register</h2>
+        <p style="background:#f0f4ff;color:#1e3c72;padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:14px;">
+            <i class="fa-solid fa-circle-info"></i> Demo mode: this creates a local demo session only, no real account is created.
+        </p>
+        <form id="registerForm">
+            <input type="text" id="regName" placeholder="Full Name" required>
+            <input type="email" id="regEmail" placeholder="Email" required>
+            <input type="password" id="regPassword" placeholder="Password (min 6 chars)" minlength="6" required>
+            <input type="text" id="regMobile" placeholder="Mobile (10 digits)" pattern="[0-9]{10}" title="Enter 10 digit mobile number" required>
+            <button class="btn" type="submit">Register</button>
+            <p class="auth-link">Already have an account? <a href="login.html">Login</a></p>
+        </form>
+    </div>
+</div>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = document.getElementById('regName').value.trim();
+        var email = document.getElementById('regEmail').value.trim();
+        demoLogin(name, email);
+        window.location.href = 'index.html';
+    });
+}
+</script>
+</body>
+</html>

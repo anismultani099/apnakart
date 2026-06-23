@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Profile | ApnaKart</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.profile-wrap { max-width: 500px; margin: 30px auto; padding: 0 20px; }
+.profile-wrap h2 { font-size: 22px; font-weight: 700; color: #1e3c72; margin-bottom: 20px; text-align: center; }
+.profile-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 30px; }
+.co-field { margin-bottom: 18px; }
+.co-field label { display: block; font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 8px; }
+.co-field input { width: 100%; padding: 12px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: 'Poppins', sans-serif; background: #f8faff; box-sizing: border-box; }
+.co-field input:focus { outline: none; border-color: #1e3c72; background: #fff; }
+.btn-save-profile { width: 100%; padding: 13px; background: #1e3c72; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.back-link { font-size: 13px; color: #1e3c72; text-decoration: none; display: inline-block; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div id="siteHeader"></div>
+
+<div class="profile-wrap">
+    <a href="user_profile.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Profile</a>
+    <h2><i class="fa-solid fa-pen"></i> Edit Profile</h2>
+    <div class="profile-card">
+        <form id="editForm">
+            <div class="co-field"><label>Full Name</label><input type="text" id="editName" required></div>
+            <div class="co-field"><label>Email</label><input type="email" id="editEmail" required></div>
+            <div class="co-field"><label>Mobile</label><input type="text" id="editMobile" pattern="[0-9]{10}"></div>
+            <button type="submit" class="btn-save-profile">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<div id="siteFooter"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+function onLayoutMounted() {
+    var user = Store.user || { name: '', email: '', mobile: '' };
+    document.getElementById('editName').value = user.name || '';
+    document.getElementById('editEmail').value = user.email || '';
+    document.getElementById('editMobile').value = user.mobile || '';
+
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        Store.user = {
+            name: document.getElementById('editName').value.trim(),
+            email: document.getElementById('editEmail').value.trim(),
+            mobile: document.getElementById('editMobile').value.trim()
+        };
+        showToast('Profile updated');
+        setTimeout(function(){ window.location.href = 'user_profile.html'; }, 600);
+    });
+}
+</script>
+</body>
+</html>
